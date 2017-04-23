@@ -1,0 +1,108 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 3(?): Vulnerability Assessment of TACACS+ Server}
+\newlist{questions}{enumerate}{1}
+\setlist[questions,1]{label={$\circ$ Q\arabic* -}}
+\begin{itemize}
+
+\subsubsection{Step 1: Setup and DOS}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]    
+\item While a TACACS+ Server can be useful in the field of network access control, there are certain vulnerabilities that are in place that must be looked at. There are 7 of these vulnerabilities that must be assessed. Of these include:
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag10}
+\item While it is not feasible to implement all of these vulnerabilities at this time, we will only be looking into a few in this exercise.
+
+\item The first Tacacs+ vulnerability we will examine is a DOS via an older version of tac\_plus that doesn't error check payload length. Instead of downloading this older version, we can instead make a trivial change to the source code to simulate this insecure version.
+
+\item From the home directory where you downloaded Tacacs, cd into the \texttt{tacacs+-f4.0.4.26} directory. Now open the packet.c file using nano, and scroll down until you find the \texttt{/* get memory for the packet */} comment. Now comment out the lines so the file now looks like this:
+
+%Insert screenshot here
+
+\item Now look at the following line:
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag29}
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag30}
+
+\item The lines we commented out basically does a sanity check on the length of the encrypted data contained within the Tacacs+ packet. Now look at the line directly after the comment:
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag31}
+
+\item This statement allocates memory for the packet structure called \texttt{pkt}. It is important to note that, if tac\_malloc fails it returns null.
+
+\item By commenting out the length sanity check we are simulating an old version of Tacacs+. This code was added after a major vulnerability was discovered.
+
+\item Next, we need to open up the Kali-Linux VM. Let's make sure that scapy is installed by executing:
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag32}
+
+\item Now create an empty text file named tacacs\_scapy.py and fill it with the script in Appendix ?. Make it executable with:
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag33}
+
+\item Now run the script (\texttt{./tacacs\_scapy.py}). Now we can interact with scapy. Execute:
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag34}
+
+\item This is a Tacacs+ layer header populated with default values. For our attack we mostly care about the length.
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag35}
+
+%The next portion of this step is the actual attack which has yet to be implemented
+
+\end{enumerate}
+
+
+\subsubsection{Step 2: Tacflip.py? (Using kali)}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]    
+
+\item Here, we will use the same network configuration as we did in exercise 1 when we set up gns3. However, this time, we will add an instance of kali linux as a "Man in the middle" between the router and the tacacs+ server.
+
+\item Add and open a kali linux vm in VMware Workstation through gns3 and add another network adapter in the virtual network editor. Set this adapter to vmet3. (Make sure that you configure all vms in gns3 to use any configured gns3 adapter).
+
+\item Assign kali a static ip address of 10.10.10.123/24 in the /etc/network/interfaces file. Make sure that you can ping to the tacacs+ server (10.10.10.100) and the cisco router (10.10.10.2).
+
+\item For this step we will need to obtain the tacotaco-master zip provided and extract it into the Downloads folder. 
+
+\item The end goal of this attack is to simply bypass all required authentication and authorization techniques provided to us by the tacacs+ server. In short, the tacflip python file makes use of a man-in-the-middle and bitflip attack on the tacacs+ server, and grants users with invalid credentials full access to the server.
+
+\item The man-in-the-middle attack will be performed by use of ettercap, a software built into kali linux. In partucular, we will make use of ARP poisoning to trick the router that the attacker (in this case, the kali vm) has the MAC address of the tacacs+ server.
+
+\item First, open a terminal and cd to where you extracted the tacotaco-master folder.
+
+\item Run this command:
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag12}
+
+\item on another terminal, launch ettercap.
+
+\ExecuteMetaData[file/4_ex3/4_ex3_CBQMs]{mytag13}
+
+\item Under "Sniff", select "unified sniffing" and set it to the interface of which you assigned the static ip to kali (Most likely eth1).  
+
+\item Scan for Hosts under "Hosts" and select the ip / MAC addresses of the TACACS+ server and the Cisco router. (10.10.10.100 and 10.10.10.2, respectively)
+
+\item Initiate ARP Poisioning, and select the option to "Sniff Remote connections" under the "Mitm" tab.
+
+\item 
+
+
+
+
+\end{enumerate}
+
+
+\subsubsection{Step 3: }
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]    
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\end{itemize}
+\end{document}

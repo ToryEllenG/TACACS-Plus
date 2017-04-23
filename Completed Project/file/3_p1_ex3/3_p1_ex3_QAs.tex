@@ -1,0 +1,115 @@
+%<*mytag1>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q1:}What  does  the  len  variable  represent?   (No  need  to  be  overlytechnical)
+\\
+\textbf{A1:}It is the length of the Tacacs+ header and the payload combined.
+\end{adjustwidth}
+%</mytag1>
+
+%<*mytag2>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q2:} Why did we need the script to examine a Tacacs+ packet with scapy?  Hint:  Look online for a list of protocol layers that scapyknows by default.
+\\
+\textbf{A2:}The Tacacs+ layer is not included with scapy by default. The script creates a Tacacs+ layer that we can now interact with and send using scapy.
+\end{adjustwidth}
+%</mytag2>
+
+%<*mytag3>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q3:}What is the script doing?  (Give a general answer)
+\\
+\textbf{A3:} It is simulating the TCP 3-Way-Handshake and sending a packet with a overly-large length field.
+\end{adjustwidth}
+%</mytag3>
+
+%<*mytag4>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q4:}What does this firewall rule do and why do we need it?  (Hint try running the script without it.)
+\\
+\textbf{A4:}The kernel will send a TCP RST packet if it receives an SYN/ACK destined for a process running in user mode. This tells the firewall to drop the outgoing RST packets.
+\end{adjustwidth}
+%</mytag4>
+
+%<*mytag5>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q5:}Why did the attack fail this time?
+\\
+\textbf{A5:}There was not a large enough payload for the attack to overload the server. This limiting factor is due to the implementation of scapy.
+\end{adjustwidth}
+%</mytag5>
+
+%<*mytag6>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q6:} Confirm that krb5kdc and kadmin are up and running.
+\\
+\textbf{A6:}
+\end{adjustwidth}
+%</mytag6>
+
+%<*mytag7>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q7:}Describe briefly what these files are for and how they are used by the Kerberos platform.
+\\
+\textbf{A7:}
+\end{adjustwidth}
+%</mytag7>
+
+%<*mytag8>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q8:}Provide a copy of the principals already established, by default, on the Kerberos server.  Describe briefly what each represents.
+\\
+\textbf{A8:}
+\end{adjustwidth}
+%</mytag8>
+
+%<*mytag9>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q9:}Describe in details the messages exchanged and captured on Wireshark (lo interface) for the locally initiated request for a TGT.  Make use of the klist response and the exported Kerberos packets. 
+\\
+\textbf{A9:}
+\end{adjustwidth}
+%</mytag9>
+
+%<*mytag10>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q10:}Explain in details the Kerberos packets exchanged between VM1 and VM3 in the process of creating a TGT.  Hint: Make extensive use of the Wireshark captured packets!
+\\
+\textbf{A10:}
+\end{adjustwidth}
+%</mytag10>
+
+
+%<*mytag11>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q11:}s there a way to peek into the key.tab file?
+\\
+\textbf{A11:}
+\end{adjustwidth}
+%</mytag11>
+
+
+%<*mytag12>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q12:}From the debug messages generated (by selecting the –V option) explain the high level steps that led the SSH server to GSSAPI (Kerberos related) authentication over the password method.
+\\
+\textbf{A12:}
+\end{adjustwidth}
+%</mytag12>
+
+
+%<*mytag13>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q13:}Correlate the packets you captured on VM1 with those captured on VM3.
+\\
+\textbf{A13:}
+\end{adjustwidth}
+%</mytag13>
+
+
+%<*mytag14>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q14:}Compare the ssh debug messages in this case with the ones you explained in the answer to Q12.
+\\
+\textbf{A14:}
+\end{adjustwidth}
+%</mytag14>

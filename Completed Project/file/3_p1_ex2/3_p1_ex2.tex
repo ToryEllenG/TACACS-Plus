@@ -1,0 +1,103 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 2 - Setting up GNS3 for use with TACACS+ (Troy)}
+
+\subsubsection{Analysis \& Evidence:}
+
+\paragraph{Step 1: Introduction}
+\hfill \break
+
+We began this exercise by setting up a host-only network on vmnet3, as specified in the lab instructions. As seen in figure \ref{fig:ex2vmnet3} below, this contained a subnet IP of 10.10.10.0, with a netmask of /24, or 255.255.255.0.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag1}
+
+Then, we installed the GNS3 software, as seen in figure \ref{fig:gns3}. Figure \ref{fig:gns3} also shows the running of the software at the bottom half of the terminal.
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag2}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag1}
+
+Once gns3 was open, we installed and added the cisco 3600 router to our topology, as seen in figure \ref{fig:3600}. This figure also shows the execution of the \texttt{show run} command (once the router was started and consoled into) to show part of the router's current running configuration.
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag3}
+
+Then, we set a static an IP on the router, giving it an IP address of 10.10.10.2/24, as seen in figure \ref{fig:staticrouter1}, \ref{fig:staticrouter2}, and \ref{fig:staticrouter3}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag4}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag2}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag3}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag5}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag6}
+
+Once the router was configured, we then added an Ubuntu Server VM to the topology to act as the TACACS+ server that the router looks to to provide its AAA services. The preliminary topology can be seen in figure \ref{fig:servervm} below.
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag7}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag4}
+
+We connected the newly added vm to the vmnet3 network (through a new network adapter) and gave it a static ip address of 10.10.10.100/24. See figure \ref{fig:servervmnet3}.
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag8}
+
+To make sure that the right network interface was connected on the server, we had to configure the server through gns3 to allow it to "use any configured VMware adapter" and change the number of network interfaces to 2. See figure \ref{fig:serverconfig}.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag9}
+
+We then started a wireshark capture on the router through gns3. To verify that the connection was successful, we captured two conversations; pinging the server vm from the router, and vice versa. An example of this can be seen in the figures \ref{fig:ping1} and \ref{fig:ping2}.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag12}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag13}
+
+These captures in figures \ref{fig:ping1} and \ref{fig:ping2} can be seen in the following wireshark capture files attached:
+"R\textunderscore to \textunderscore S \textunderscore icmp.pcapng" and "S\textunderscore to \textunderscore R \textunderscore icmp.pcapng".
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag5}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag6}
+
+
+\paragraph{Step 2: Testing tacacs server on preliminary topology}
+\hfill \break
+
+Now that the preliminary topology is set up , we were then required to input a list of commands into the router console, so that the router would have the correct configuration to utilize the TACACS+ services. See figure \ref{fig:tacacscommands}. Figure \ref{fig:tacacsrun} shows the \texttt{show run} command on the router to verify that these configuration commands have taken place.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag10}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag11}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag7}
+\hfill \break
+Now, we added a client to access the router, through means of an Ubuntu Desktop VM. We also connected the desktop vm to vmnet3, and assigned it a static IP address of 10.10.10.101/24. On the gns3 topology, we added a switch to the middle, and connected all of the machines, so it looks like figure \ref{fig:gns3topo}.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag14}
+
+We then started a wireshark capture on the Ubuntu Server vm and prepared to access the router from the client (Ubuntu Desktop VM). In doing so, we tailed the two log files that the tacacs+ server uses for AAA services. These tails can be seen in the figures \ref{fig:tail1} and \ref{fig:tail2}.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag15}
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag16}
+
+As you can see in figures \ref{fig:tail1} and \ref{fig:tail2}, the authorization and authentication parts of the conversation are found in \ref{fig:tail1} and the accounting parts are found in \ref{fig:tail2}. This proves to be useful, as a network administrator could have these files up at all times to see all the activity that is occuring when a user attempts to authenticate to the tacacs+ server. 
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag8}
+
+
+In figure \ref{fig:serverestart}, we then restart the tacacs+ server and check the status with the \texttt{sudo service} commands.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag17}
+
+With wireshark still running, we tested the services provided by TACACS+ by telnetting into the router from the ubuntu Desktop VM. By entering the credentials set for a test user (specified in setting up the tac\textunderscore plus daemon) we have full  remote access to the router to configure as need be. Proof of the wirshark capture and the telnet connection can be seen in figure \ref{fig:telnettacacs}.
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag18}
+
+The packets captured in this conversation can be found as "tacacs\textunderscore telnet \textunderscore 1.pcapng" attached. Figure \ref{fig:telnettacacs} shows the logging into the router, as well as executing the \texttt{enable} command (with the enable password set in the configuration files) to have further access to the router. For example, we then ran two commands in the telnet console: \texttt{show run} and \texttt{show ip in br}. This can be seen in figure \ref{fig:testcommands}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag19}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_img]{mtag20}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag9}
+
+\ExecuteMetaData[file/3_p1_ex2/3_p1_ex2_QAs]{mytag10}
+
+\subsubsection{Key Learning/Takeaways: }
+
+In this exercise, we learned that GNS3 provided a straight-forward way to create and test a "real-world" network environment with real Cisco device images. Using TCP port 49, TACACS+ Authentication, Authorization, and Accounting services log who has logged in to the device using the service, as well as when and what commands they issued. This can be useful for network administrators if they were needed to account for services in a billing environment, or the perform an audit for security purposes. A main takeaway from this exercise is that through configuration, TACACS+ has the ability to fallback onto a local account, if the router does not receive a response from the specified server.
+
+
+\end{document}

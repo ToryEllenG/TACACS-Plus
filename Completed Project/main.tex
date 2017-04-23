@@ -1,0 +1,44 @@
+\documentclass{report}
+\usepackage{etex}
+\usepackage{mystyle}
+
+\begin{document}
+
+\subfile{file/0_title/0_title}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\listoftodos
+
+\newpage
+\section{Introduction} \label{sec1}
+\subfile{file/1_Intro/1_intro}
+
+\newpage
+\section{Lab Network Diagrams \& Tables} \label{sec2}
+\subfile{file/2_net/2_net_dgrm_tbl}
+
+\newpage
+\section{Lab Exercises : Results \& Analysis} \label{sec3}
+\subfile{file/3_p1_ex1/3_p1_ex1}
+\newpage
+\subfile{file/3_p1_ex2/3_p1_ex2}
+\newpage
+\subfile{file/3_p1_ex3/3_p1_ex3}
+\newpage
+\subfile{file/3_p1_ex4/3_p1_ex4}
+
+
+\newpage
+\section{Lab Additional Questions \& List of Attachments} \label{sec4}
+\subfile{file/4_aqla/4_aqla}
+\newpage
+\section{Lab Observations, Suggestions \& Best Practices} \label{sec5}
+\subfile{file/5_osb/5_osb}
+\section{Lab References} \label{sec6}
+\subfile{file/6_ref/6_ref}
+\section{Acknowledgements} \label{sec7}
+\subfile{file/7_ack/7_ack}
+
+\end{document}

@@ -1,0 +1,115 @@
+%<*mytag1>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q1:}How does TACACS+ encrypt the entire body of the packet? Reference the RFCs here.
+\\
+\textbf{A1:}The entire body of a TACACS+ packet is encrypted by "XORing" the packet body data (byte-wise) with a "pseudo-random" pad that the TACACS+ protocol defines. This XOR function looks like this: \texttt{Encrypted (data) == data \^{} pseudo\textunderscore pad}. This pad is made by joining a series of MD5 hashes (of 16 bytes) and truncating it to the length of the original data. The pad looks like this: \texttt{pseudo\textunderscore pad = (MD5\textunderscore 1, MD5\textunderscore 2,...MD5\textunderscore n) truc. to len(data)}. Each MD5 hash is composed of the data in headers seen in the packet (made available in plain text), and the Pre-Shared-Key. The hash looks like this: \texttt{MD5\textunderscore n = MD5(session id, pre-shared-key, version, sequence number, and MD5\textunderscore n-1)}. \cite{tacacasrfc}
+\end{adjustwidth}
+%</mytag1>
+
+%<*mytag2>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q2:}How are we able to perform the Taco-Taco tacoflip attack with use of Man-in-the-middle? In particular, what is the specific vulnerability that we are taking advantage of?
+\\
+\textbf{A2:}In the Authentication and Authorization part of TACACS+, the first byte of the reply determines whether the user has been granted access to the device or not (0x01 for acceptance, 0x02 for deny). Taking advantage of the fact that TACACS+ does not integrate any form of integrity checks, we are able to use the TacoTaco attack to change the first byte of TACACS+ packets without the server knowing that it was maliciously changed. This is how the Man-in-the-middle attack is achieved. \cite{tacotaco} 
+\end{adjustwidth}
+%</mytag2>
+
+%<*mytag3>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q3:}Examine the tacoflip.py file in a text editor of your choice. What exactly is it doing?
+\\
+\textbf{A3:}See figure \ref{fig:tacoflip}. The tacoflip python file takes advantage of the fact that we know how the TACACS+ protocol is structured by use of a "bit flipping" attack. It gets the "pseudo-pad" that TACACS+ makes by "XORing" the encrypted first byte of the packet and the decrypted byte. The decrypted byte is known since the byte returns as "0x02" if the user is denied access. The python file then "XORs" the newly obtained "pseudo-pad" with the byte relating to successful authentication (0x01), puts this XOR'ed byte into the encrypted packet, and sends it to the server, all during transmission.
+\end{adjustwidth}
+%</mytag3>
+
+%<*mytag4>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q4:}What is arp spoofing / poisoning? Why do we need it alongside the attack?
+\\
+\textbf{A4:}Arp spoofing is a type of attack in which a machine sends false ARP messages over a network. This Man-in-the-middle attack allows the attacker's illegitimate MAC address to be linked to a legitimate IP address on the network. This is needed alongside the attack because ARP spoofing tricks the TACACS+ configured device (in our case the router) that the Attacker's machine has the same MAC and IP address as the TACACS+ server. This allows us to send, receive, and alter all traffic meant for the server on the attacker's machine. \cite{arpspoof}
+\end{adjustwidth}
+%</mytag4>
+
+%<*mytag5>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q5:}Did you set up ssh to the router and verify that it is active? 
+\\
+\textbf{A5:}Yes, the configuration commands and verification are seen in figure \ref{fig:ex4ssh}. below. 
+\end{adjustwidth}
+%</mytag5>
+
+%<*mytag6>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q6:} What do the first two "sysctl" commands do? What is the "iptables" command telling the TACACS+ server to do?
+\\
+\textbf{A6:} The first sysctl command enables IP forwarding. This allows Kali to act as a "router" by being able to transfer packets from one IP address to another. The second sysctl command relates to the iptables command. By default, the iptables PREROUTING command does not work on the local loopback address in kali. This allows it to do so. The iptables command states that "all traffic destined for the TACACS+ server (10.10.10.100) should be routed to the local loopback address (127.0.0.01), on Kali".
+\end{adjustwidth}
+%</mytag6>
+
+%<*mytag7>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q7:}How can you figure out what the "-t" and "-v" options do?
+\\
+\textbf{A7:} See figure \ref{fig:tacooptions}. The -t is for "target" and the -v is for "verbose. This can be seen upon expansion of the python script.
+\end{adjustwidth}
+%</mytag7>
+
+%<*mytag8>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q8:}Provide a copy of the principals already established, by default, on the Kerberos server.  Describe briefly what each represents.
+\\
+\textbf{A8:}
+\end{adjustwidth}
+%</mytag8>
+
+%<*mytag9>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q9:}Describe in details the messages exchanged and captured on Wireshark (lo interface) for the locally initiated request for a TGT.  Make use of the klist response and the exported Kerberos packets. 
+\\
+\textbf{A9:}
+\end{adjustwidth}
+%</mytag9>
+
+%<*mytag10>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q10:}Explain in details the Kerberos packets exchanged between VM1 and VM3 in the process of creating a TGT.  Hint: Make extensive use of the Wireshark captured packets!
+\\
+\textbf{A10:}
+\end{adjustwidth}
+%</mytag10>
+
+
+%<*mytag11>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q11:}s there a way to peek into the key.tab file?
+\\
+\textbf{A11:}
+\end{adjustwidth}
+%</mytag11>
+
+
+%<*mytag12>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q12:}From the debug messages generated (by selecting the –V option) explain the high level steps that led the SSH server to GSSAPI (Kerberos related) authentication over the password method.
+\\
+\textbf{A12:}
+\end{adjustwidth}
+%</mytag12>
+
+
+%<*mytag13>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q13:}Correlate the packets you captured on VM1 with those captured on VM3.
+\\
+\textbf{A13:}
+\end{adjustwidth}
+%</mytag13>
+
+
+%<*mytag14>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q14:}Compare the ssh debug messages in this case with the ones you explained in the answer to Q12.
+\\
+\textbf{A14:}
+\end{adjustwidth}
+%</mytag14>

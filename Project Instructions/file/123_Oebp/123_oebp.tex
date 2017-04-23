@@ -1,0 +1,68 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\section{Learning Objectives}\label{sec 1}
+%\setlist{leftmargin=13mm}
+%\usepackage[shortlabels]{enumitem}
+%\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+%\setlength\itemsep{0.1mm}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=16mm,labelsep=0.5cm]
+\item What is TACACS+?
+\item What is AAA?
+\item What is the different between TACACS and RADIUS?
+\item What is gns3?
+\item What is gcc?
+\item 
+\item 
+\item 
+\item 
+\end{enumerate}
+%add more items to learning objectives as time goes on
+
+\section{Equipment \& Software}\label{sec2}
+Each team should have access to 
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=16mm,labelsep=0.5cm]
+\item{A desktop (9020 Dell) – Linux 16.04 LTS (username: checkout, Password: hellocheckin)}
+\item{VMware Workstation 12 on Linux}
+\item{Virtual Machines Base (to be used for cloning and copying) are in /home/checkout/Base\_VMs folder:
+Ubuntu Desktop 16.04 (x64), Ubuntu Server16.04 (x64), Windows 10 (x64) and Kali-Linux 2016.2 (x64)}
+\item{Access to iMac (OSX 10.11.x) with VMware Fusion 8.x (username admin3022, password: 3022\$3022)}
+\item{Access to the Lab private network and to the public network (not simultaneously)}
+\item{Access to ShareLatex online}
+\item{Ethernet network connection} 
+\item Windows 7 VM
+\item access to TACACS+ Server executable downloaded from TACACS.net
+\end{enumerate}
+
+
+\section{Best Practices (Trouble Shooting is How You Learn Networking!)}\label{sec3}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=16mm,labelsep=0.5cm]
+\item{To obtain the names of the available network interfaces use the following command: ls /sys/class/net.}
+\item{Get used to applying tcpdump for quick packet capturing:  A good cheat sheet  can be found in http://www.rationallyparanoid.com/articles/tcpdump.html}
+\item{Make sure that you have your SSD drive in every class.  All your VMs should be on your SSD drive. Clone or copy the baseline VMs to your SSD drive.  Never make use of the baseline VMs unless you are given a permission to do so.}
+\item{Lab Desktops are set up for “weekly deep freeze,” that is, every weekend, the desktops will be restored to their original image state. Whatever documents, VMs, etc. left will be wiped out with no way to be restored!}
+\item{Do not leave the lab without copying all materials (including VMs) that you care not losing!}
+\item{Make it a habit to look up protocol definition and specifications in the appropriate RFC and IEEE standards documents.}
+\item{We will be using ShareLatex in creating the Lab Reports.  ShareLatex is available online for free.}
+\item{Take many screen-shots even if you decide later to drop some.}
+\item{Make it a habit to look up a new Linux command description using man <command>.}
+\item{Check Firewall: Ubuntu \#sudo ufw status, Fedora \#sudo /etc/init.d/iptables status, Windows: Check firewall status.}
+\item{If you have problems connecting to the Internet, sometimes it's as simple as checking whether the Ethernet Network interface is registered with JMU registration server or whether the Ethernet Network interface adapter (real or virtual) is connected and/or configured correctly (manual versus DHCP).}
+\item{When you're working on remote desktop access, make sure that the PC you are trying to access remotely is configured to allow remote desktop access.}
+\item{Check reachability/connectivity between two PCs using the ping command.}
+\item{Power off or suspend all unused VMs to maintain a decent performance on the Host. The more VMs are powered on, the more demands on the Host's CPU and RAM.}
+\item{Check if the software application/program you need is installed.}
+\item{As a last resort, you could always reboot (power off/on).}
+\item{You should always check Edit > Virtual Network Editor and make sure that vmnet0 is set up for bridged/Auto-bridging, vmnet1 is configured for Host-only and vmnet8 is configured for NAT.  These vmnets configurations should not be changed unless instructed to do so.}
+\item{In the case that the Asus AP (Access Point) acts sluggish or becomes non responsive, make sure to reset the AP by unplugging the power, press the RED button.  While still pressing the RED button, plug back the power and wait for 1 min before releasing the RED button.  When asked to enter username and password enter admin, admin, and admin or root, root and root.}
+\item{If one of two connected devices has the automatic MDI/MDI\-X (Medium Dependent Interface/Meduim Dependent Interface\-Crossed) configuration feature there is no need for crossover cables. Introduced in 1998, this made the distinction between uplink and normal ports and manual selector switches on older hubs and switches obsolete.}
+\item{If you are working with one or more VMs on an exercise and you need to stop and continue at another time, you can always freeze the VMs in a state that would allow you to continue from where you left off. That is, instead of selecting Power Off you should select Suspend!}
+\item{If you get Error binding to port for 0.0.0.0 port. Check lsof –i:1812. If you get a response, then you have hung up port. Kill port kill \-9 pid.  You may also check netstat –unpl.  However, the easiest way is to execute sudo pkill \-9 radius.}
+\item{Check the following site for mysql commands:
+\\
+\url{http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html}}
+\item{tcpdump – the easy tutorial \url{http://openmaniak.com/tcpdump.php}}
+\item{Note that // means COMMENTS}
+\item{Use clear!}
+\item{In a command line shell, you can scroll up using shift+pg up}
+\end{enumerate}
+\end{document}

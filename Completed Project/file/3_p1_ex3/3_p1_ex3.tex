@@ -1,0 +1,76 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 3: Denial-of-Service attack on TACACS+ with use of Scapy. (Isaac)}
+
+\subsubsection{Analysis \& Evidence:}
+
+
+\paragraph{Step 1: Setup and DOS}
+\hfill \break
+
+We begin by making sure that scapy is installed with \texttt{dpkg -s scapy}, and see that it is already installed.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag1}
+
+Then, we create and edit the tacacs\_scapy.py file based on Appendix E.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag2}
+
+Next, we make the script executable with \texttt{chmod 755 tacacs\_scapy.py} and run the script. Then, we run the scapy commands and get the following output:
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag3}
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_QAs]{mytag2}
+
+\paragraph{Step 2: }
+\hfill \break
+
+We begin by setting up the Ubuntu Server VM with 512 MB of ram and restarting the VM. 
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag4}
+
+Next, we create the text file for the script in Appendix C and make it executable using \texttt{chmod}. 
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag5}
+
+Then we copy the script into the file.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_QAs]{mytag3}
+
+Next we open Wireshark on the Ubuntu Server from the host, with the filter set to only display packets using port 49.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag6}
+
+Next, we ran the iptables command to drop outgoing RST packets:
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag7}
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_QAs]{mytag4}
+
+Then, we run the script, and check Wireshark.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag8}
+
+Then we check on the server if Tacacs+ is still running.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag9}
+
+Next, we examine the man page for malloc on the server.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag10}
+
+Then, we copy the script in Appendix D and make it executable like the previous scripts.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mta11}
+
+Next, we restarted tac\_plus and the wireshark capture and executed the attack.
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag12}
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag13}
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_img]{mtag14}
+
+\ExecuteMetaData[file/3_p1_ex3/3_p1_ex3_QAs]{mytag5}
+    
+\subsubsection{Key Learning/Takeaways: }
+In this exercise we learned that when implementing an attack, it is very important to choose the correct tools. Scapy wasn't designed to send to send a packet with an outrageous payload. I imagine an attacker would have to write software from scratch to implement this attack successfully. I also believe it would be difficult to find a version of tacacs that hasn't been updated since the late 1990s. That being said, I'm sure this vulnerable version is running out there somewhere. 
+
+\end{document}

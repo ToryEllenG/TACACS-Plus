@@ -1,0 +1,155 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\newlist{questions}{enumerate}{1}
+\setlist[questions,1]{label={$\circ$ Q\arabic* -}}
+\hfill \break
+\hl{\textbf{MAKE SURE TO PROVIDE NETWORK DIAGRAMs AND TABLEs CONTAINING INFORMATION ABOUT THE MACHINES INVOLVED (SUCH AS, IP ADDRESSES, MAC ADDRESSES, ETC.)}}
+\subsection{Exercise 1: Setup of TACACS+, Creating Test Users, and Configuration}
+\subsubsection{Introduction}
+
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]
+\item You are required to setup an IT department in which all the routers, switches, firewalls, access points and other hardware devices are all to be accessible through a single network. After some research, you find that there are protocols dealing with Authentication, Authorization, and Accounting (AAA), which seem to be highly useful for the job. Of those protocols, you find RADIUS and TACACS+ at the top of the list. As you have already investigated RADIUS, you begin to study TACACS+. 
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag1}
+
+\item[] ALL INVOLVED VMs SHOULD HAVE THEIR NETWORK ADAPTORS BE CONFIGURED FOR NAT or HOST-ONLY CONNECTION MODE (IF YOU DO NOT KNOW HOW, PLEASE ASK YOUR INSTRUCTOR OR TA).  In this Exercise, let us try NAT.
+\end{enumerate}
+
+\subsubsection{Step 0: Preparation (see Appendix A)}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]
+\item For this exercise, you will need
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag10}
+
+\item Make sure that the VMs you are utilizing are located locally on your host machine, rather than on an external drive. GNS3 has a hard time using VMs that are not local.
+
+\end{enumerate}
+
+\subsubsection{Step 1: Setup of TACACS+ Server on Windows 7 VM}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=12mm,labelsep=0.5cm]
+
+\item In this step, we will run through the setup of the TACACS+ server, provided to us by TACACS.net.
+
+\item Launch the Windows 7 VM. It might be a good idea to increase the RAM and processing power before powering on the VM, as this is where we will set up the main server.
+
+\item During the installation process, the wizard will ask you to input a shared secret to make use of when logging onto the server. Enter:
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag12}
+
+when prompted. (This may be changed at a later time in the configuration files, as noted.)
+
+\item Begin the installation, and click Finish when complete. You have now successfully put the TACACS+ Server on your windows 7 vm! By default, the process should have automatically been started and running.
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag2}
+
+\item Validate that TACACS+ Server installed correctly, and all configuration files are free of errors. This is done by navigating in the gui file explorer to C:\textbackslash Program Files\textbackslash TACACS.net, and selecting 
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag13}
+
+\item \hl{FROM HERE ON OUT, MAKE SURE YOU ARE RUNNING ALL APPLICATIONS OR SERVICES AS ADMINISTRATOR.}
+\vspace{3mm}
+\item All of the changes of configuration done by this TACACS.net TACACS+ server are through XML files. To access these files, navigate to C:\textbackslash ProgramData\textbackslash TACACS.net\textbackslash config. 
+\item Here, you will be presented with 5 separate files. 
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag3}
+
+\item Now that we have confirmed that all is working with the server, we will now begin to test connectivity, both remotely and locally.
+
+\end{enumerate}
+
+\subsubsection{Step 2: Local /Remote Connectivity Testing} 
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]
+\item To first test the TACACS+ Server locally, we will create a test user, and attempt to connect to the server with the given credentials. 
+
+\item With the text editor of your choice, (we used atom), open the "authentication.xml" file located at C:\textbackslash ProgramData\textbackslash TACACS.net\textbackslash config, and uncomment the following lines as seen below in figure \ref{fig:users} (lines 44 and 61 in figure \ref{fig:users}.) If you are not able to edit these files with the text editor of your choice, select all of the cofiguration files, and verify that they are \hl{not} set to "read only".
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mtag1}
+\item Replace the field between the Name tags of "user1" to \texttt{testuser1}. Replace the field between the LoginPassword ClearText="somepassword" to \texttt{testpassword}. Save the file.
+
+%Maybe add a question here later
+\item To test that the adding of another user was successful, first navigate to "tacverify" as you did before from the start menu, All Programs, TACACS.net, "TACverify".
+\item If no errors were found in the configuration, you can then run "TACTest", in the same directory as "TACverify".
+\vspace{3mm}
+\item When you click on "TACTest", you will be presented with a terminal. To initiate the test, log onto the server using the credentials of the test user "testuser1" that you just made in alteration of the authentication.xml file earlier with these commands:
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag15}
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag4}
+
+\subsubsection{Setting up gns3}
+
+**We might move this to exercise 2**
+
+\item Install gns3 on the Host machine, and launch.
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag14}
+
+\item When asked to select a server for gns3 to run on, select \textbf{"Local Server"}.
+
+\item Add the cisco router image provided to the gns3 network topology. This can be done either through the preference menu on GNS3, or upon startup of GNS3. Follow the default settings, and when done, drag the router to the empty space in the middle.
+
+\item Right-click the router and click start, then right click the router again and select console. Here we will set up the router to have a static ip address of 10.10.10.2.
+
+\item Issue the following commands in the console of the cisco router.
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag16}
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag5}
+
+\item It is a good thing to note that when the router returns a long list of values, you can use the Enter key to move down line by line, Spacebar to go to the end, and any other key to cancel.
+
+\item To set a static ip in the cisco router, initiate these commands:
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag17}
+
+\item check that the ip had been successfully been set with these commands once more:
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag16}
+
+\item Add an Ubuntu Server VM to the GNS3 Topology, in a similar manner of how the router was added.
+
+\item Assuming you have knowledge of setting a static ip address on the ubuntu server, make an interface of vmnet3 in the VMware virtual network editor, and set it to host only with a subnet IP of 10.10.10.0 (netmask 255.255.255.0). Add a network adapter to the Ubuntu Server VM of which you just launched and set it to vmnet3, with an ip address of 10.10.10.100.
+
+\item Create a link between the cisco router and the ubuntu server VM using the link icon on GNS3 (The last one on the left panel).
+\item Select FastEthernet0/0 on the router, and drag it to Ethernet1 on the Ubuntu Server VM. 
+
+\item At this point, the network topology should look similar to the figure \ref{fig:gns3setup} below.
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mtag2}
+
+\item GNS3 has wireshark packaged in upon installation. To test this, right click on the ubuntu server vm in the network topology, and select capture.
+
+\item An instance of wireshark should then launch. To test this, you should ping 10.10.10.100 from the cisco router to receive icmp packets. Close wireshark, and export the packets as "test\textunderscore icmp.pcapng".
+
+\subsubsection{Testing tacacs server on preliminary topology}
+
+\item Go to Exercise 2, and install the tac\textunderscore plus daemon on the ubuntu server you have connected to your gns3 topology. Once done, return to this step to test the tacacs connectivity.
+
+\item Console into the cisco router once more, and apply the following commands:
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag18}
+
+\item Exit, and verify that these commands were successful with the \texttt{show run} command once more.
+
+\item To test the tacacs+ server, Start capturing packets on the ubuntu server vm (using the same method as before). We will now tail the tacacs+ log files on the server, and telnet into the router, providing the verification of the user johnathanm we set in the tacacs+ configuration file. 
+
+\item On 2 new terminals on the Ubuntu Server VM (CTRL + ALT + F2 (or F3)), run:
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag19}
+
+\item Restart the tacacs+ server with:
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag20}                                             
+
+\item With the log files being tailed, and wireshark still running, we will test that you have connectivity to the server. Go back to the first terminal in the ubuntu server vm with CTRL + F1.
+
+\item Telnet to the router's ip address, and enter the necessary credentials that you set in the file located at /etc/tacacs/tac\textunderscore plus.conf.
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag21}
+
+\item You have now successfully connected to the tacacs+ server via cisco router! Stop wireshark and export the specified packets, as well as the log files that were being tailed.
+
+\item To prove that you are in the cisco router of which you had previously set up, issue:
+
+\ExecuteMetaData[file/4_ex1/4_ex1_CBQMs]{mytag22}
+
+\end{enumerate}  
+
+\subsubsection{Step 3:Comparison to RADIUS}
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]
+
+\item \textbf{\underline{Extra Credit (5 points each)}}
+
+
+\end{enumerate}
+\end{document}

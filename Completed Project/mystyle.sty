@@ -1,0 +1,48 @@
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\usepackage{inputenc}
+\usepackage{subfiles}
+\usepackage{listings}
+\usepackage{float} %the following id to make use of H in figure definition
+\usepackage{graphicx,caption}
+\usepackage{catchfilebetweentags}
+\usepackage{changepage}
+\graphicspath{{img/}}
+\renewcommand{\thesection}{\arabic{section}} %the following is to number section as 1, 2 not 0.1, 0.2
+\setcounter{secnumdepth}{3} %the following is to number subsubsection
+\setcounter{tocdepth}{3} %the following to include the subsubsection numbering in toc
+\bibliography{file/6_ref/6_src} % the following is used with biber \addbibresource{test.bib}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Last Name \& Last Name}
+\lhead{ISAT 460/FA 2016 - Lab 1}
+\lfoot{Page \thepage}
+\rfoot{\today}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\title{MyLabTemplate}
+\author{Last \&Last }
+\date{\today}
+\usepackage{hyperref}
+\usepackage[disable]{todonotes}
+%In order to disable to do notes you need to use the disable option as follows: \usepackage[disable]{todonotes}
+\usepackage{soul}
+\hypersetup{linktocpage=true,
+    colorlinks=true,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4} %allow the use of paragraph in place of the missing subsubsubsection.
+\usepackage{adjustbox}
+\newcommand{\namesigdate}[2][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[0.5\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[0.5\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}

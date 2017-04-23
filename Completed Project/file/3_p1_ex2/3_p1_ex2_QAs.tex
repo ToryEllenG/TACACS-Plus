@@ -1,0 +1,115 @@
+%<*mytag1>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q1:}- What does GNS3 stand for, and what is it primarily used for?
+\\
+\textbf{A1:}GNS3 stands for "Graphical Network Simulator 3". It is primarily used to use virtual and real network technologies and developing "real-world" networks in a private environment.
+\end{adjustwidth}
+%</mytag1>
+
+%<*mytag2>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q2:}What do the previous commands show ... do?
+\\
+\textbf{A2:} \texttt{show run} shows the current running configuration of the cisco router. This command is commonly used after a configuration has been set, to make sure that it was validated.\texttt{show ip interface brief} shows the network interfaces available on the router, asa well as a brief description of them (name, assigned or not, status, etc.)
+\end{adjustwidth}
+%</mytag2>
+
+%<*mytag3>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q3:}In terms of cisco iOS syntax, what is the difference between the "\textgreater" prompt and the "\#" prompt?
+\\
+\textbf{A3:} The "\textgreater" prompt refers to the "user exec" mode, while the "\#" refers to the "privilege exec" mode, also known as the "enable" mode.
+\end{adjustwidth}
+%</mytag3>
+
+%<*mytag4>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q4:}Did you set the vm to have two network adapters and allow gns3 to use it? Show evidence.
+\\
+\textbf{A4:} Yes, see figure \ref{fig:serverconfig}.
+\end{adjustwidth}
+%</mytag4>
+
+%<*mytag5>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q5:}Did you perform the ping successfully on both machines? Provide evidence.
+\\
+\textbf{A5:} Yes, see figures \ref{fig:ping1} and \ref{fig:ping2}.
+\end{adjustwidth}
+%</mytag5>
+
+%<*mytag6>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q6:} What are the MAC addresses relating to the VM and the router? 
+\\
+\textbf{A6:}The MAC address of the Router is cc:01:64:d3:00:10. The MAC address of the Server is 00:0c:29:1c:73:9f. 
+\end{adjustwidth}
+%</mytag6>
+
+%<*mytag7>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q7:} What is the purpose of inputting all of these commands? In particular, what do the commands that have "local" at the end specify? What do the numbers "0, 1, 7, and 15" mean?
+\\
+\textbf{A7:} The list of commands as shown in figure \ref{fig:tacacscommands} are all required to enable the TACACS+ services on the router. The commands that have "local" at the end tell the router that if no TACACS+ server responds, look to the local account specified.(if no such local account exists, deny all forms of any attempts to log in) The numbers "0, 1, 7, and 15" refer to the different privilege numbers for a user utilizing the TACACS+ service.
+\end{adjustwidth}
+%</mytag7>
+
+%<*mytag8>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q8:}What is the difference between the two log files that are being tailed? What are the purposes of them?
+\\
+\textbf{A8:} The "tac\textunderscore plus.log" file is the main log that the TACACS+ server stores all activity regarding the authorization and authentication packets coming through. The "tac\textunderscore plus \textunderscore acct" file stores all the information in regards to accounting services.
+\end{adjustwidth}
+%</mytag8>
+
+%<*mytag9>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q9:} Can you see all parts of the AAA conversation? Show proof.
+\\
+\textbf{A9:}Yes, see figure \ref{fig:q8}.
+\end{adjustwidth}
+%</mytag9>
+
+%<*mytag10>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q10:}What details are made available in the tacacs+ packet headers in plain text?
+\\
+\textbf{A10:}The Major/Minor version, type of packet (AAA), Sequence number, Session ID, and packet length are all available in plain text on a TACACS+ packet. The rest of the information of the packet is encrypted under "Encrypted Data"
+\end{adjustwidth}
+%</mytag10>
+
+
+%<*mytag11>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q11:}s there a way to peek into the key.tab file?
+\\
+\textbf{A11:}
+\end{adjustwidth}
+%</mytag11>
+
+
+%<*mytag12>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q12:}From the debug messages generated (by selecting the –V option) explain the high level steps that led the SSH server to GSSAPI (Kerberos related) authentication over the password method.
+\\
+\textbf{A12:}
+\end{adjustwidth}
+%</mytag12>
+
+
+%<*mytag13>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q13:}Correlate the packets you captured on VM1 with those captured on VM3.
+\\
+\textbf{A13:}
+\end{adjustwidth}
+%</mytag13>
+
+
+%<*mytag14>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q14:}Compare the ssh debug messages in this case with the ones you explained in the answer to Q12.
+\\
+\textbf{A14:}
+\end{adjustwidth}
+%</mytag14>

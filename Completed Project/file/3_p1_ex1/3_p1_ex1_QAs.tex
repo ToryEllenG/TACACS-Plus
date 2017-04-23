@@ -1,0 +1,127 @@
+%<*mytag1>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q1:} What does TACACS stand for, and what is it used for?
+\\
+\textbf{A1:} TACACS stands for Terminal Access Controller Access Control System. It is used for implementing Network Access Control, and in particular, it is noted for methods of Administrative Authentication, Authorization and Accounting.
+\\
+\end{adjustwidth}
+%</mytag1>
+
+%<*mytag2>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q2:} What is the difference between TACACS+ and TACACS?
+\\
+\textbf{A2:}TACACS+(a cisco modified protocol) is the modified version of TACACS (an old open protocol). However, TACACS+ is not proprietary, as one would think. It is currently an open source protocol that can be used in a server, provided that the user has the correct environment.
+\\
+\end{adjustwidth}
+%</mytag2>
+
+%<*mytag2.5>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q2.5:} What are the advantages that TACACS+ has over RADIUS, and what are the main purposes for using each?
+\\
+\textbf{A2.5:}The main advantage that TACACS+ has over the RADIUS protocol is that TACACS+ separates all layers of AAA (Authentication, Authorization, and Accounting) during packet exchange. TACACS+ also has the ability to encrypt the entire packet, making it more secure than RADIUS, which only runs a hash on the password. With TACACS+ you can actually see the commands that the user has inputted to the configured device. RADIUS is most used for subscriber AAA, and TACACS+ is used for Administrative AAA. This makes TACACS more flexible and more designed to the maintaining of specific network devices. You can control who has access to those devices based on setting a permission level or setting specfic commands that that user can issue. 
+\\
+\end{adjustwidth}
+%</mytag2.5>
+
+%<*mytag3>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q3:} Provide 2 forms of proof that the TACACS+ server is up and running on the windows 7 vm.
+\\
+\textbf{A3:} As seen in the figures \ref{fig:services} and \ref{fig:tasks}, We used the task manager and services window to verify that the TACACS+ server was running. Another way we could have done this is with netstat.
+\\
+\end{adjustwidth}
+%</mytag3>
+
+%<*mytag4>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q4:}What port does the tacacs.net tacacs+ server run on by default?
+\\
+\textbf{A4:}tacacs+ uses port 49.
+\\
+\end{adjustwidth}
+%</mytag4>
+
+%<*mytag5>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q5:}Show evidence that the tacacs+ server can be started and stopped with \texttt{net stop tacacs.net} and \texttt{net start tacacs.net} in an administrative terminal.
+\\
+\textbf{A5:}
+\\
+\end{adjustwidth}
+%</mytag5>
+
+%<*mytag6>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q6:} Verify that the list of configuration files include: authentication, authorization, clients, googleotp, and tacplus
+\\
+\textbf{A6:}
+\\
+\end{adjustwidth}
+%</mytag6>
+
+%<*mytag7>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q7:} What do the -k, -u, and -p flags mean?
+\\
+\textbf{A7:} -k refers to the secret encryption key, -u is the user, and -p is the password to the corresponding user.
+\\
+\end{adjustwidth}
+%</mytag7>
+
+%<*mytag8>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q8:} How are we able to execute the \texttt{tactest} on the user "checkout" if we did not manually set the user up?
+\\
+\textbf{A8:}By default, tacacs+ has code that allows local users located on the server to log in and use the services provided by tacacs+. When navigating to the end of the authentication file, we see that TACACS.net has automatically populated the field with the local user. See figure \ref{fig:localuser}
+\\
+\end{adjustwidth}
+%</mytag8>
+
+%<*mytag9>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q9:}Did the \texttt{tactest}s work? Provide screenshots for evidence.
+\\
+\textbf{A9:}Yes, see figure \ref{fig:tactestsucceed}. In the figure, you can see the successful login of the user we created, "testuser1", with the password of "testpassword".
+\\
+\end{adjustwidth}
+%</mytag9>
+
+%ADD MORE QUESTIONS HERE
+
+%<*mytag10>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q10:}What does the--prefix option do?
+\\
+\textbf{A10:}It changes the installation directory.
+\\
+\end{adjustwidth}
+%</mytag10>
+
+%<*mytag11>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q11:}Compare the permissions under each ACL group. 
+\\
+\textbf{A11:}The network\_admin group has permission from any address while the sys\_admin group only has permission from a particular host.
+\\
+\end{adjustwidth}
+%</mytag11>
+
+%<*mytag12>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q12:}Which  commands  for  the  sysadmin  group  are  only  allowed with certain options? 
+\\
+\textbf{A12:}Some of them are configure, show, interface
+\\
+\end{adjustwidth}
+%</mytag12>
+
+%<*mytag13>
+\begin{adjustwidth}{15pt}{0pt}
+\textbf{Q13:} 
+\\
+\textbf{A13:}
+\\
+\end{adjustwidth}
+%</mytag13>

@@ -1,0 +1,138 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 1: Setup of TACACS+, Creating Test Users, and Configuration on Windows and Linux (Isaac)}
+
+\subsubsection{Analysis \& Evidence }
+
+%\noindent \textbf
+\subsubsection{Step 0: Preparation}
+\hfill \break 
+In this lab, we were responsible for maintaining a theoretical IT department so that users could have remote access to specific network devices in a network. We found that AAA (Authentication, Authorization, and Accounting) protocols would be the best to implement in this scenario. Two protocols, RADIUS and TACACS+ began to stand out. In this lab, we chose to further investigate the services provided by TACACS+.
+\hfill \break
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag1}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag2}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag2.5}
+
+
+%\noindent \textbf
+\subsubsection{Step 1: Setup of TACACS+ Server on Windows 7 VM}
+\hfill \break
+We began this exercise by running the executable file provided on a Windows 7 VM.
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag1}
+Then, we set the secret encryption key, as stated in the lab instructions.
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag2}
+Then we finished the installation.
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag3}
+
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag3}
+To check that the tacacs+ server was up and running, we navigated to "services" under the windows control panel. 
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag4}
+We also checked if the server was running under the windows task manager.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag5}
+
+After we checked that the service was running, we navigated to the configuration files as seen in figure \ref{fig:7config}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag10.1}
+
+Then, in the authentication.xml file, we uncommented the comments as seen in the figure \ref{fig:8users}, 
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag10.2}
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag4}
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag6}
+
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag8}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag9}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag10.3}
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag10}
+
+
+\break
+%\noindent \textbf
+\subsubsection{Step 2: Preparation of setting up Tacacs+ server on Ubuntu Server VM}
+\paragraph{Step 1: }
+\hfill \break
+
+For this exercise we need a single Ubuntu Server vm called VM1. On this machine we run \texttt{sudo su} to become the root user.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag11}
+
+Next, we see if the tac\_plus dependencies are installed by running \texttt{dpkg -s gcc bison flex}.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag12}
+
+
+We see that bison and flex is not installed so we use \texttt{apt-get install} to add those packages.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag13}
+
+Then we download and untar TACACS+.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag14}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag15}
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag10}
+
+Next, we comment out the lines specified in \texttt{packet.c}.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag18}
+
+Next, we navigate to the directory and run \texttt{./configure -help} to see the installation options for tac\_plus.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag16}
+
+Then, we run the installation command.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag17}
+
+Then, we edit the /etc/ld.so.conf file.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag25}
+
+Next, we reload the libraries with the \texttt{ldconfig} command.
+
+\paragraph{Step 2: }
+\hfill \break
+
+We begin by running the following commands to create the tacacs config file, and then we make a file for the accounting logs.
+
+Then, we edit the config file based on Appendix F, and make it executable.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag19}
+
+Next, we make the file for accounting logs in \texttt{/var/log/tac\_plus}.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag11}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_QAs]{mytag12}
+
+Then, we run the \texttt{tac\_pwd} command, and add the password generated to the config file.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag20}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag21}
+
+\paragraph{Step 3: }
+\hfill \break
+
+We begin this step by creating a tac\_plus executable that con be used to start the service in the \texttt{/etc/default} directory.
+
+Next, we copy the following script into \texttt{/etc/default/tac\_plus}.
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag22}
+
+Then we start the daemon with \texttt{/etc/init.d/tac\_plus start}, and verify that it is running with the following commands:
+
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag23}
+\ExecuteMetaData[file/3_p1_ex1/3_p1_ex1_img]{mtag24}
+
+%\noindent \textbf
+\subsubsection{Step 3:}
+\hfill \break
+
+
+\subsubsection{Key Learning/Takeaways:}
+This exercise gave us an overall introduction to the TACACS+ protocol. In particular, we learned that there are two main pieces of software to implement the protocol. These are the TACACS.net program available for windows, and the tac\_plus daemon available for linux. Upon studying the features of each, it is apparent that the windows version is easier to install, and comes with more configuration files and tools to make the TACACS+ protocol more variable. The tac\_plus daemon take a bit more effort to install and configure so that it works correctly, but is much easier to manage as we have easy access to the source code. Because of these facts, we continue the rest of the lab working with the tac\_plus daemon. Working with the protocol in this exercise made us appreciate the abilities of TACACS+. An example of a key takeaway from this exercise included learning how the exchange of packets between a device and a TACACS+ server worked, namely separating all aspects of AAA to make the protocol more flexible.
+
+\end{document}

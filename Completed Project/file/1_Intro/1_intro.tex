@@ -1,0 +1,14 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\label{intro}
+When there are many network devices (routers, firewalls, switches) in an environment, it is useful to have a centralized management service for access to these devices. These services are known as Authentication, Authorization, and Accounting (AAA) services.
+
+With TACACS+, these services are possible. A server running TACACS+ has the ability to set specific privileges & commands to particular users and user groups. The TACACS+ server then logs all aspects of the AAA communication (who is logged in, what commands they are issuing, etc.).
+
+In this lab we make use of multiple VMs (Windows 7, Ubuntu Server / Desktop, and Kali Linux) running on either an Ubuntu Desktop or OSX host. In order to test the functionality of TACACS+ in a "real-world" network situation, we also make use of the GNS3 Software. We were able to connect the virtual machines in GNS3 with the switches it provides, as well as utilizing a Cisco 3600 Router image as the TACACS+ enabled device to connect to. This router image was provided to us by Dr. Salib. 
+
+After we discovered how to implement the TACACS+ protocol in a "real-world" scenario, we began to assess the vulnerabilities that were inherent in the protocol. Some of these vulnerabilities included errors in the source code that could allow for a Denial-of-Service attack, and errors in the encryption method that TACACS+ uses for its packets that allows for a Man-in-the-Middle attack.
+\hfill \break
+All relevant attachments to this lab report can be found in this section: \ref{LOA}
+
+\end{document}

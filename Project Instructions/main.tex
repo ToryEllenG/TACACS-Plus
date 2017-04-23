@@ -1,0 +1,34 @@
+\documentclass[10pt, a4paper]{report}
+\usepackage{etex}
+\usepackage{mystyle}
+
+
+
+\begin{document}
+
+\subfile{file/0_title/0_title}
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+%\listoftodos
+
+\newpage
+\subfile{file/123_Oebp/123_oebp}
+\newpage
+\section{Exercises} \label{sec4}
+\subfile{file/4_ex1/4_ex1}
+\newpage
+\subfile{file/4_ex2/4_ex2}
+\newpage
+\subfile{file/4_ex3/4_ex3}
+\newpage
+\subfile{file/4_ex4/4_ex4}
+\newpage
+\subfile{file/56_aqd/56_aqd}
+\section{References} \label{sec7}
+\subfile{file/7_ref/7_ref}
+\newpage
+\section{Appendices} \label{sec8}
+\subfile{file/8_app/8_app}
+\end{document}

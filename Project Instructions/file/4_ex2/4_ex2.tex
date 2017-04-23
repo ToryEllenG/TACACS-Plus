@@ -1,0 +1,109 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 2 - TACACS on Ubuntu & Comparison to Windows }
+\newlist{questions}{enumerate}{1}
+\setlist[questions,1]{label={$\circ$ Q\arabic* -}}
+\begin{itemize}
+
+\subsubsection{Step 1: Preparation}
+
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]    
+    
+    \item For this exercise we will need a single Ubuntu Server VM, configured for NAT. We will refer to this machine as VM1
+    
+    \item On VM1 run \texttt{sudo su} to become the root user.
+    
+    \item This version of TACACS relies on four dependencies: gcc, bison, flex, and libwrap0-dev. Check to see if they are installed by running 
+    \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag13}
+
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag1}
+ 
+
+     \item Use \texttt{apt-get install} to install the packages that aren't already installed.
+     
+\item Now we need to install TACACS+. Download by running 
+
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag12}
+     
+     \item Navigate to the \texttt{tacacs+-F4.0.4.26} directory and use \texttt{cat} or \texttt{less} to view the contents of INSTALL.
+     
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag2}
+
+     \item Now run 
+     \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag14}to view all the installation options.
+     
+    \item Next, run 
+     \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag15}
+    
+    \item Now, we must make sure that necessary library links are installed. Execute \texttt{nano /etc/ld.so.conf}. Add the line \texttt{/usr/local/lib}, and reload the libraries using the \texttt{ldconfig} command.
+    
+\end{enumerate}
+
+    \subsubsection{Step 2:  }
+    
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm] 
+
+    \item Now, we will be creating the two user groups: sys\textunderscore admin and network\textunderscore admin. Let's first create the tac\textunderscore plus.conf file.
+    
+    \item Execute \texttt{mkdir /etc/tacacs}, then change into that directory. Run \texttt{touch tac\textunderscore plus.conf} and \texttt{chmod 755 tac\textunderscore plus.conf}.
+    
+    \item Next, we shall make a file for the accounting logs. 
+    \item \texttt{mkdir /var/log/tac\textunderscore plus}
+    \item \texttt{touch /var/log/tac\textunderscore plus/tac\textunderscore plus.acct}
+    
+    \item Now, add the text in Appendix (appendix here) to the \texttt{tac\textunderscore plus.conf} file 
+    
+    \item Let's take a look at the file:
+     
+    \item Under \texttt{# Encryption Key} we see \texttt{key = "tac\textunderscore test}. This is used to encrypt packets between the server and clients.
+    
+    \item Now, look under the comment \texttt{# Set where to send accounting records}. We have the lines \texttt{accounting syslog;} and \texttt{accounting file = /var/log/tac\textunderscore plus/tac\textunderscore plus.acct}. This tells the tacacs daemon where to write log information.
+    
+    \item Let's take a look at the text under the \texttt{# ACL for network\textunderscore admin group} and the \texttt{# ACL for sys\textunderscore admin group} comments.
+    
+    \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag3}
+    
+    \item Now let's look at the sys\textunderscore admin group configuration, specifically the sections that begin with \texttt{cmd = }
+    
+    \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag4}
+    
+    \item Let's look at the at the specific users that are defined in our config file. These configurations can override those for the group specified.
+    
+    \item Under the user jonathanm, notice the \texttt{login = } and \texttt{enable = } fields. These are passwords generated with \texttt{tac\_pwd}. Instead of using the ones in the template let's make our own.
+    
+    \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag16}
+    \ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag17}
+    
+    \item The output you receive is a DES encrypted password. Add your password to the config file (the one you just generated and two more). 
+    
+    
+\end{enumerate}
+
+
+\subsubsection{Step 3: }
+
+\begin{enumerate}[noitemsep,label=$\bullet$,leftmargin=20mm,labelsep=0.5cm]    
+
+\item We need a couple more steps to give tac\_plus the normal start/stop abilities (using service)
+
+\item Execute:
+
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag18}
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag19}
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag20}
+
+\item Now copy the script text in Appendix(blah) into \texttt{/etc/default/tac\textunderscore plus}
+
+\item Start the service by executing:
+
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag21}
+
+\item Verify tac\textunderscore plus is in fact running.
+
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag22}
+\ExecuteMetaData[file/4_ex2/4_ex2_CBQMs]{mytag23}
+
+\end{enumerate}
+     
+\end{itemize}
+\end{document}

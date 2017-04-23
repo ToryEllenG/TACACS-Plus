@@ -1,0 +1,91 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\subsection{Exercise 4: TACACS+ attack by use of Man in The Middle (Taco Taco) (Troy)}
+
+\subsubsection{Analysis \& Evidence:}
+
+\paragraph{Step 1: Introduction and setup}
+\hfill \break
+
+We first set up an environment that was similar to the one in Exercise 2, but replacing the Ubuntu Desktop Client in GNS3 with a Kali Linux VM. We set Kali Linux to have a static IP address of 10.10.10.6/24 on eth1, and linked in to the vmnet3-host-only network that we specified in exercise 2. See figures \ref{fig:kaliip} and \ref{fig:ex4setup} below.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag1}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag2}
+
+We also verified that the Kali Linux VM was able to ping the other machines in the topology (Router and Server). See figure \ref{fig:pinging}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag3}
+
+After, we downloaded the TacoTaco project off of github, and extracted the contents to our Downloads folder on the Kali Linux VM. See figure \ref{fig:tacoproof} for proof.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag4}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag1}
+\hfill \break
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag2}
+\hfill \break
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag3}
+\hfill \break
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag5}
+\hfill \break
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag4}
+\hfill \break
+Then, we set up the cisco router to accept ssh instead of telnet, and verified the version, and whether or not it was up and running.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag5}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag6}
+
+\paragraph{Step 2:Initiating the tacoflip.py attack}
+\hfill \break
+To initiate the tacoflip.py attack, we first opened wireshark on Kali Linux and set it to capture packets on the "eth1" interface, the one we manually configured earlier. We then ran the tacoflip.py file, as seen in figure \ref{fig:1sttaco} below.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag7}
+
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag7}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag12}
+
+
+Next, we used \texttt{arpspoof} on the eth1 interface, telling the TACACS+ router that the Kali Linux attacker has the same MAC address as the TACACS+ server. See figure \ref{fig:arpspoof}.
+
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag8}
+
+To verify that the ARP poisoning was successful, we went back to the console of the actual router, and issued a \texttt{show arp} command, to see all of the ARP information of devices connected to the router. See figure \ref{fig:showarp} below.
+
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag9}
+
+Now that the ARP poisoning was successful, we ran a few \texttt{sysctl} and \texttt{iptables} commands in figure \ref{fig:3commands} so that the tacoflip.py script would be successful. 
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag10}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_QAs]{mytag6}
+
+After issuing these commands in figure \ref{fig:3commands}, we now attempt to ssh into the router with invalid credentials in figure \ref{fig:hahassh}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag11}
+In figure \ref{fig:hahassh}, you can see that the ssh login required \texttt{-oKexAlgorithms=+diffie-hellman-group1-sha1} in order to be successful. This is due to the fact that our particular cisco router image offers an older version of key exchange when ssh is enabled (\texttt{diffie-hellman-group1-sha1}). This is a workaround to logging in on older versions of ssh.
+\hfill \break
+Also in figure \ref{fig:hahassh}, you can see the successful login with invalid credentials to the TACACS+ router! We first have access to the "user exec" mode (\textgreater), then issue the \texttt{enable} command to access the "privilege exec" mode (\#). 
+\hfill \break
+As soon as the attacker initiates the login command, the terminal running the tacoflip.py file shows information of the TACACS+ packets and proof of the bit flipping attack in figure \ref{fig:tacoflip1}. 
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag13}
+
+For further proof that we had full access to the router, we used commands such as \texttt{show ip int brief}, \texttt{show users}, and \texttt{show run} that we did in exercise 2. This can be seen below in figures \ref{fig:showipkali}, \ref{fig:showuserskali}, and \ref{fig:showrunkali}.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag14}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag15}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag16}
+
+We then exited the ssh shell, stopped wireshark, and exported the packets to a file called "tacotaco\textunderscore packets.pcapng".
+\hfill \break
+After issuing the command in figure \ref{fig:showrunkali}, we are able to see the pre-shared-key that TACACS+ uses to encrypt the packet data. In our case, the key is "tac\textunderscore test" (The one that we set in the configuration of the TACACS+ server in Exercise 1). Figure \ref{fig:wiresharkkey} below shows us giving the key to the wireshark capture to decrypt the encrypted requests of the entire TACACS+ packet body.
+
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag17}
+Once the key was given to wireshark, we are now able to see all aspects of the AAA conversation in plain text in the "decrypted request" field! This is shown in figures \ref{fig:authpacket1}, \ref{fig:authpacket2}, and \ref{fig:accpacket}.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag18}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag19}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag20}
+
+After analyzing the wireshark capture, we went to the server vm to look at the log files after we completed the attack. These included the /var/log/tac\textunderscore plus.log and /var/log/tac\textunderscore plus/tac\textunderscore plus.acct. Screenshots of this can be found in the figures \ref{fig:tacpluslog} and \ref{fig:tacccount}.
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag21}
+\ExecuteMetaData[file/3_p1_ex4/3_p1_ex4_img]{mtag22}
+
+From the tac\textunderscore plus.log file, we saw that even though we had access from 10.10.10.6 as "HACKER", the log file counts the user as rejected. However, in the tac\textunderscore plus.acct file, you can see what commands that the user inputted. This could be useful to a network administrator, so see if any sort of suspicious commands were used, or if any suspicious users were attempting to log in to the network device.
+
+\paragraph{Step 3:Dynamic ARP Inspection / DHCP Snooping}
+\hfill \break
+In respect to time, we were not able to develop specific instructions or a lab report to implement and execute Dynamic Arp Inspection / DHCP Snooping. This is partially because the cisco router image we were provided with does not support the feature, as it is an outdated version. However, in the lab instructions, we will continue to describe what could happen if the feature was successfully implemented.
+
+\subsubsection{Key Learning/Takeaways: }
+
+If an attacker were to take a wireshark capture (through means of man-in-the-middle) of a legitimate login, that attacker would have the ability to perform the tacoflip.py attack and obtain the tacacs+ key. The attacker could then potentially login to the router to perform malicious activity on the router under the impersonation of a real user. Key takeaways from this exercise involved learning how TACACS+ encrypts the full body of its packets through its own algorithm, and examining the tacoflip.py file to learn exactly what was going on in the attack and how we were able to bypass all means of AAA. While it is possible to protect a network from Man-in-the-middle attacks, it appears that this protocol has an inherent vulnerability that will not be assessed, as the protocol is relatively old. 
+\end{document}
