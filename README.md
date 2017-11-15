@@ -9,5 +9,5 @@ TACACS+ Server Test on GNS3: https://youtu.be/kE6lZISLnJQ
 Taco Taco Attack on TACACS+ Server: https://youtu.be/SuQVGCM7kfA
 
 ## Teams Members ##   
-Troy Gamboa    
+Tory Gamboa    
 Isaac Sumner
